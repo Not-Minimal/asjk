@@ -4,7 +4,7 @@ Framework Selector CLI is a simple interactive tool that allows developers to qu
 
 ## 🌎 Website
 
-Más información en: [https://tu-usuario.github.io/asjk-website](https://tu-usuario.github.io/asjk-website)
+Más información en: [https://asjk-eosin.vercel.app](https://asjk-eosin.vercel.app)
 
 ## 📦 Installation
 
