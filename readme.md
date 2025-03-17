@@ -2,6 +2,8 @@
 
 Framework Selector CLI is a simple interactive tool that allows developers to quickly choose and initialize a project using one of the top JavaScript frameworks.
 
+![Framework Selector CLI in action](assets/demo.gif)
+
 ## 🌎 Website
 
 Más información en: [https://asjk-eosin.vercel.app](https://asjk-eosin.vercel.app)
