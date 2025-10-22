@@ -19,19 +19,89 @@ intro(`${chalk.cyan("🚀 Bienvenido a Framework Selector CLI!")}`);
 const hostname = os.hostname();
 const shortHostname = hostname.split("-")[0];
 
-// Lista de frameworks con sus comandos base
-const frameworks = {
-  Vite: "create vite",
-  Astro: "create astro",
-  SvelteKit: "create svelte",
-  "Next.js": "create-next-app",
-  "Nuxt.js": "nuxi init",
-  Remix: "create-remix",
-  Angular: "@angular/cli new",
-  SolidStart: "create-solid",
-  Qwik: "create qwik",
-  Preact: "init preact",
+// Función para construir el comando correcto según el framework y gestor de paquetes
+const getFrameworkCommand = (framework, packageManager) => {
+  const commands = {
+    "Next.js": {
+      npm: "npx create-next-app@latest",
+      pnpm: "pnpm create next-app@latest",
+      yarn: "yarn create next-app@latest",
+      bun: "bun create next-app@latest",
+    },
+    Astro: {
+      npm: "npm create astro@latest",
+      pnpm: "pnpm create astro@latest",
+      yarn: "yarn create astro",
+      bun: "npm create astro@latest",
+    },
+    SvelteKit: {
+      npm: "npx sv create",
+      pnpm: "npx sv create",
+      yarn: "npx sv create",
+      bun: "npx sv create",
+    },
+    Vite: {
+      npm: "npm create vite@latest",
+      pnpm: "pnpm create vite",
+      yarn: "yarn create vite",
+      bun: "bun create vite",
+    },
+    "React Router": {
+      npm: "npx create-react-router@latest",
+      pnpm: "npx create-react-router@latest",
+      yarn: "npx create-react-router@latest",
+      bun: "npx create-react-router@latest",
+    },
+    Angular: {
+      npm: "npm install -g @angular/cli",
+      pnpm: "pnpm install -g @angular/cli",
+      yarn: "yarn global add @angular/cli",
+      bun: "bun install -g @angular/cli",
+    },
+    SolidStart: {
+      npm: "npm init solid@latest",
+      pnpm: "pnpm create solid@latest",
+      yarn: "yarn create solid@latest",
+      bun: "bun create solid@latest",
+    },
+    Qwik: {
+      npm: "npm create qwik@latest",
+      pnpm: "pnpm create qwik@latest",
+      yarn: "yarn create qwik",
+      bun: "bun create qwik@latest",
+    },
+    Preact: {
+      npm: "npm init preact",
+      pnpm: "npm init preact",
+      yarn: "npm init preact",
+      bun: "npm init preact",
+    },
+    "Nuxt.js": {
+      npm: "npx nuxi init",
+      pnpm: "npx nuxi init",
+      yarn: "npx nuxi init",
+      bun: "npx nuxi init",
+    },
+  };
+
+  return (
+    commands[framework]?.[packageManager] ||
+    `${packageManager} create ${framework.toLowerCase()}@latest`
+  );
 };
+
+const frameworks = [
+  "Next.js",
+  "Astro",
+  "SvelteKit",
+  "Vite",
+  "React Router",
+  "Angular",
+  "SolidStart",
+  "Qwik",
+  "Preact",
+  "Nuxt.js",
+];
 
 const packageManagers = ["npm", "pnpm", "yarn", "bun"];
 const additionalLibraries = [
@@ -46,7 +116,7 @@ const additionalLibraries = [
   // Selección de framework
   const framework = await select({
     message: `👋 Hola, ${chalk.bold(shortHostname)}!, ¿en qué framework programaremos hoy?`,
-    options: Object.keys(frameworks).map((name) => ({
+    options: frameworks.map((name) => ({
       value: name,
       label: name,
     })),
@@ -78,7 +148,7 @@ const additionalLibraries = [
     });
   }
 
-  const command = `${packageManager} ${frameworks[framework]}@latest`;
+  const command = getFrameworkCommand(framework, packageManager);
   log.step(
     `\n🚀 Preparando instalación de ${chalk.bold(framework)} con ${packageManager}...`,
   );
